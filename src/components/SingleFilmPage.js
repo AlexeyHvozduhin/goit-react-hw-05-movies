@@ -50,7 +50,11 @@ export const SingleFilmPage = () => {
         <Link to={location?.state?.from ?? '/movies'}>Go Back</Link>
       </div>
       <div>
-        <img src={`${img_irl}${singleFilm.poster_path}`}></img>
+        <img
+          src={`${img_irl}${singleFilm.poster_path}`}
+          alt="Poster"
+          width={'400px'}
+        ></img>
         <div>
           <div> {`${filmName} (${filmYear})`}</div>
           <div>User rate: {singleFilm.vote_average}</div>

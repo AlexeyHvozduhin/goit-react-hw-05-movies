@@ -41,6 +41,7 @@ export const SingleFilmCast = () => {
                   'https://i1.sndcdn.com/avatars-000348889688-vvjlm3-t240x240.jpg';
               }}
               width={'100px'}
+              alt={`Photo ${actor.name}`}
             ></img>
             <h3>Name: {actor.name}</h3>
             <h4>Character: {actor.character}</h4>

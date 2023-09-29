@@ -29,7 +29,7 @@ export const SearchPage = () => {
       }
       getQuizess();
     }
-  }, []);
+  }, [searchParams]);
 
   const ChengeParams = value => {
     searchParams.set('value', value);
