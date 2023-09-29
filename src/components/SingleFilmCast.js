@@ -26,7 +26,7 @@ export const SingleFilmCast = () => {
       }
     }
     getQuizess();
-  }, []);
+  }, [filmId]);
 
   return (
     <div>
