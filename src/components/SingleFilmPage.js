@@ -41,7 +41,7 @@ export const SingleFilmPage = () => {
       }
     }
     getQuizess();
-  }, []);
+  }, [filmId]);
 
   return (
     <div>
