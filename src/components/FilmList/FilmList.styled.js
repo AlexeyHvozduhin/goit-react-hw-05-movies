@@ -7,7 +7,6 @@ export const ListPageBox = styled.div`
   /* min-height: 100vh; */
   min-height: 100%;
   min-width: 100%;
-  overflow: hidden;
   justify-content: center;
   align-items: center;
   display: flex;
@@ -27,11 +26,11 @@ export const ListPageBox = styled.div`
   &::after {
     content: '';
     position: absolute;
-    width: 350px;
-    height: 350px;
+    width: 600px;
+    height: 600px;
     background: linear-gradient(#9763db, #3494e2);
     border-radius: 50%;
-    transform: translate(250px, 100px);
+    transform: translate(250px, -800px);
     box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
   }
 
