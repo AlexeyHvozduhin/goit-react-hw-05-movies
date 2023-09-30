@@ -1,6 +1,14 @@
-import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
-import { singleFilmById } from './API';
+import { Outlet, useLocation, useParams } from 'react-router-dom';
+import { singleFilmById } from '../../components/API';
 import { useEffect, useState } from 'react';
+import {
+  SingleFilmBox,
+  SingleFilmDescription,
+  SingleFilmDetails,
+  StyledLink,
+  SingleFilmBackground,
+  GoBackLink,
+} from './SingleFilm.styled';
 
 export const SingleFilmPage = () => {
   const { filmId } = useParams();
@@ -44,31 +52,32 @@ export const SingleFilmPage = () => {
   }, [filmId]);
 
   return (
-    <div>
+    <SingleFilmBackground>
       {loading && <div>LOADING...</div>}
       <div>
-        <Link to={location?.state?.from ?? '/movies'}>Go Back</Link>
+        <GoBackLink to={location?.state?.from ?? '/movies'}>&#8249;</GoBackLink>
       </div>
-      <div>
+      <SingleFilmBox>
         <img
           src={`${img_irl}${singleFilm.poster_path}`}
           alt="Poster"
           width={'400px'}
         ></img>
-        <div>
-          <div> {`${filmName} (${filmYear})`}</div>
-          <div>User rate: {singleFilm.vote_average}</div>
-          <div>Overview: {singleFilm.overview}</div>
-          <div>Genres: {filmGenres}.</div>
-        </div>
-      </div>
-      <Link to="cast">Cast</Link>
-      <div></div>
-      <Link to="reviews">Reviews</Link>
+        <SingleFilmDescription>
+          <h2> {`${filmName} (${filmYear})`}</h2>
+          <h3>User rate: {singleFilm.vote_average}</h3>
+          <p>Overview: {singleFilm.overview}</p>
+          <h3>Genres: {filmGenres}.</h3>
+          <SingleFilmDetails>
+            <StyledLink to="cast">casting</StyledLink>
+            <StyledLink to="reviews">reviews</StyledLink>
+          </SingleFilmDetails>
+        </SingleFilmDescription>
+      </SingleFilmBox>
 
       {loading && <div>LOADING...</div>}
       {error && !loading && <div>ERROR!</div>}
       <Outlet />
-    </div>
+    </SingleFilmBackground>
   );
 };

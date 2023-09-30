@@ -1,6 +1,11 @@
 import { useParams } from 'react-router-dom';
-import { singleFilmById } from './API';
+import { singleFilmById } from '../../components/API';
 import { useEffect, useState } from 'react';
+import {
+  ErrorMessage,
+  ReviewList,
+  ReviewListElement,
+} from './SingleFilm.styled';
 
 export const SingleFilmReview = () => {
   const [review, setReviews] = useState([]);
@@ -31,20 +36,21 @@ export const SingleFilmReview = () => {
 
   return (
     <div>
-      <h2>Review:</h2>
       {loading && <div>LOADING...</div>}
       {error && !loading && <div>ERROR!</div>}
       {review.length > 0 ? (
-        <ul>
+        <ReviewList>
           {review.map(reviewContent => (
-            <li key={reviewContent.id}>
-              <h3>Author: {reviewContent.author}</h3>
-              {reviewContent.content ?? <p>Nope</p>}
-            </li>
+            <ReviewListElement key={reviewContent.id}>
+              <h3>{reviewContent.author}</h3>
+              <p>{reviewContent.content ?? 'Nope'}</p>
+            </ReviewListElement>
           ))}
-        </ul>
+        </ReviewList>
       ) : (
-        <p>Sorry, we don't have a review for this movie yet</p>
+        <ErrorMessage>
+          Sorry, we don't have a review for this movie yet
+        </ErrorMessage>
       )}
     </div>
   );

@@ -1,10 +1,10 @@
 import { Routes, Route } from 'react-router-dom';
-import { Layout } from './Layout';
-import { HomePage } from './HomePage';
-import { SingleFilmPage } from './SingleFilmPage';
-import { SingleFilmCast } from './SingleFilmCast';
-import { SingleFilmReview } from './SingleFilmReview';
-import { SearchPage } from './SearchPage';
+import { Layout } from './Layout/Layout';
+import { HomePage } from '../pages/HomePage';
+import { SingleFilmPage } from '../pages/SingleFilmPage/SingleFilmPage';
+import { SingleFilmCast } from '../pages/SingleFilmPage/SingleFilmCast';
+import { SingleFilmReview } from '../pages/SingleFilmPage/SingleFilmReview';
+import { SearchPage } from '../pages/SearchPage';
 
 export const App = () => {
   return (

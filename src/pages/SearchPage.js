@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { searchFilmByName } from './API';
-import { Link, useLocation, useSearchParams } from 'react-router-dom';
+import { searchFilmByName } from '../components/API';
+import { useLocation, useSearchParams } from 'react-router-dom';
+import { FilmList } from 'components/FilmList/FilmList';
+import { Searching } from 'components/Searching/Searching';
 
 export const SearchPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -65,26 +67,22 @@ export const SearchPage = () => {
 
   return (
     <form onSubmit={handleSearch}>
-      <input
+      {/* <input
         type="text"
         value={searchTerm}
         onChange={evt => setSearchTerm(evt.target.value)}
         placeholder="Enter a movie title"
-      />
-      <button type="submit">Search</button>
+      /> */}
+      <Searching value={searchTerm} setSearchTerm={setSearchTerm} />
       {loading && <div>LOADING...</div>}
       {error && !loading && <div>ERROR!</div>}
 
       {filmList.length > 0 && (
-        <ul>
-          {filmList.map(film => (
-            <li key={film.id}>
-              <Link to={`/movies/${film.id}`} state={{ from: location }}>
-                {film.original_title}
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <FilmList
+          filmList={filmList}
+          location={location}
+          pageTitle={'Result'}
+        />
       )}
     </form>
   );

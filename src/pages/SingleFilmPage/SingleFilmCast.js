@@ -1,6 +1,7 @@
 import { useParams } from 'react-router-dom';
-import { singleFilmById } from './API';
+import { singleFilmById } from '../../components/API';
 import { useEffect, useState } from 'react';
+import { CastList, CastListElement } from './SingleFilm.styled';
 
 export const SingleFilmCast = () => {
   const [casting, setCasting] = useState([]);
@@ -30,10 +31,9 @@ export const SingleFilmCast = () => {
 
   return (
     <div>
-      <h2>Cast:</h2>
-      <ul>
+      <CastList>
         {casting.map(actor => (
-          <li key={actor.id}>
+          <CastListElement key={actor.id}>
             <img
               src={`${img_irl}${actor.profile_path}`}
               onError={e => {
@@ -43,11 +43,13 @@ export const SingleFilmCast = () => {
               width={'100px'}
               alt={`Poster ${actor.name}`}
             ></img>
-            <h3>Name: {actor.name}</h3>
-            <h4>Character: {actor.character}</h4>
-          </li>
+            <div>
+              <h3>Name: {actor.name}</h3>
+              <p>Character: {actor.character}</p>
+            </div>
+          </CastListElement>
         ))}
-      </ul>
+      </CastList>
     </div>
   );
 };
