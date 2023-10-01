@@ -7,7 +7,7 @@ import { FilmList } from 'components/FilmList/FilmList';
 // import { ListHomePage } from 'components/ListHomePage/ListHomePage';
 // ///////////////////////////////////////////////////////////////////////////////////////////
 // ///////////////////////////////////////////////////////////////////////////////////////////
-export const HomePage = () => {
+const HomePage = () => {
   const [filmItems, setFilmItems] = useState([]);
 
   const [loading, setLoading] = useState(false);
@@ -30,17 +30,13 @@ export const HomePage = () => {
     getQuizess();
   }, []);
 
-  const location = useLocation();
-
   return (
     <div>
       {loading && <div>LOADING...</div>}
       {error && !loading && <div>ERROR!</div>}
-      <FilmList
-        filmList={filmItems}
-        location={location}
-        pageTitle={'Trending Today'}
-      />
+      <FilmList filmList={filmItems} pageTitle={'Trending Today'} />
     </div>
   );
 };
+
+export default HomePage;

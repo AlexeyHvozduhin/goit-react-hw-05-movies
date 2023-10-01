@@ -1,29 +1,31 @@
 import { useParams } from 'react-router-dom';
-import { singleFilmById } from '../../components/API';
+import { singleFilmByIdInfo } from '../../components/API';
 import { useEffect, useState } from 'react';
 import { CastList, CastListElement } from './SingleFilm.styled';
+import { getPoster } from 'components/functional';
 
-export const SingleFilmCast = () => {
+const SingleFilmCast = () => {
   const [casting, setCasting] = useState([]);
   const { filmId } = useParams();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(false);
   const img_irl = 'https://image.tmdb.org/t/p/w500/';
 
   useEffect(() => {
     async function getQuizess() {
       try {
-        // setLoading(true);
-        // setError(false);
+        setLoading(true);
+        setError(false);
         if (filmId) {
           // Запрос на актёров, снимающихся в конкретном фильме
-          const { cast } = await singleFilmById(`${filmId}/credits`);
-          // console.log(cast);
+          const { cast } = await singleFilmByIdInfo(`${filmId}/credits`);
           setCasting(cast);
         }
       } catch (error) {
         console.log('error');
-        // setError(true);
+        setError(true);
       } finally {
-        // setLoading(false);
+        setLoading(false);
       }
     }
     getQuizess();
@@ -32,24 +34,24 @@ export const SingleFilmCast = () => {
   return (
     <div>
       <CastList>
-        {casting.map(actor => (
-          <CastListElement key={actor.id}>
+        {casting.map(({ id, profile_path, name, character }) => (
+          <CastListElement key={id}>
             <img
-              src={`${img_irl}${actor.profile_path}`}
-              onError={e => {
-                e.target.src =
-                  'https://i1.sndcdn.com/avatars-000348889688-vvjlm3-t240x240.jpg';
-              }}
+              src={getPoster(profile_path, 'actor')}
               width={'100px'}
-              alt={`Poster ${actor.name}`}
+              alt={`Poster ${name}`}
             ></img>
             <div>
-              <h3>Name: {actor.name}</h3>
-              <p>Character: {actor.character}</p>
+              <h3>Name: {name}</h3>
+              <p>Character: {character}</p>
             </div>
           </CastListElement>
         ))}
+        {loading && <div>LOADING...</div>}
+        {error && !loading && <div>ERROR!</div>}
       </CastList>
     </div>
   );
 };
+
+export default SingleFilmCast;

@@ -1,3 +1,4 @@
+import { useLocation } from 'react-router-dom';
 import {
   ListPageBox,
   ListHomePage,
@@ -6,15 +7,16 @@ import {
   ListHomePageElement,
 } from './FilmList.styled';
 
-export const FilmList = ({ filmList, location, pageTitle }) => {
-  const img_irl = 'https://image.tmdb.org/t/p/w500/';
-  // console.log(filmList[0].overview);
+import { getPoster } from 'components/functional';
+
+export const FilmList = ({ filmList, pageTitle }) => {
+  const location = useLocation();
   return (
     <ListPageBox>
       <div className="_film_list_box">
         <TitleElement>{pageTitle}</TitleElement>
         <ListHomePage>
-          {filmList.map(({ id, title, backdrop_path, overview }) => (
+          {filmList.map(({ id, title, poster_path, overview }) => (
             <StyledLink
               to={`/movies/${id}`}
               state={{ from: location }}
@@ -22,11 +24,7 @@ export const FilmList = ({ filmList, location, pageTitle }) => {
             >
               <ListHomePageElement>
                 <img
-                  src={`${img_irl}${backdrop_path}`}
-                  onError={e => {
-                    e.target.src =
-                      'https://celes.club/uploads/posts/2022-05/1653089639_2-celes-club-p-znaki-voprosa-fon-krasivie-2.jpg';
-                  }}
+                  src={getPoster(poster_path, 'film')}
                   width={'100px'}
                   alt={`Poster ${title}`}
                 ></img>

@@ -4,55 +4,23 @@ import { useLocation, useSearchParams } from 'react-router-dom';
 import { FilmList } from 'components/FilmList/FilmList';
 import { Searching } from 'components/Searching/Searching';
 
-export const SearchPage = () => {
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  const [searchTerm, setSearchTerm] = useState(searchParams.get('value') ?? '');
-  const [value, setValue] = useState('');
+const SearchPage = () => {
   const [filmList, setFilmList] = useState([]);
-
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
-  useEffect(() => {
-    if (searchParams.get('value')) {
-      async function getQuizess() {
-        try {
-          setLoading(true);
-          setError(false);
-          const films = await searchFilmByName(searchParams.get('value'));
-          setFilmList(films.results);
-        } catch (error) {
-          console.log('error');
-          setError(true);
-        } finally {
-          setLoading(false);
-        }
-      }
-      getQuizess();
-    }
-  }, [searchParams]);
-
-  const ChengeParams = value => {
-    searchParams.set('value', value);
-    setSearchParams(searchParams);
-  };
-
-  const handleSearch = evt => {
-    evt.preventDefault();
-    setValue(searchTerm);
-    ChengeParams(searchTerm);
-  };
+  const [searchParams, setSearchParams] = useSearchParams();
+  const value = searchParams.get('value');
 
   useEffect(() => {
+    if (!value) return;
+
     async function getQuizess() {
       try {
         setLoading(true);
         setError(false);
-        if (value) {
-          const films = await searchFilmByName(`${value}`);
-          setFilmList(films.results);
-        }
+        const films = await searchFilmByName(value);
+        setFilmList(films.results);
       } catch (error) {
         console.log('error');
         setError(true);
@@ -61,29 +29,20 @@ export const SearchPage = () => {
       }
     }
     getQuizess();
-  }, [value]);
-
-  const location = useLocation();
+  }, [searchParams]);
 
   return (
-    <form onSubmit={handleSearch}>
-      {/* <input
-        type="text"
-        value={searchTerm}
-        onChange={evt => setSearchTerm(evt.target.value)}
-        placeholder="Enter a movie title"
-      /> */}
-      <Searching value={searchTerm} setSearchTerm={setSearchTerm} />
-      {loading && <div>LOADING...</div>}
-      {error && !loading && <div>ERROR!</div>}
+    <section>
+      <Searching />
 
       {filmList.length > 0 && (
-        <FilmList
-          filmList={filmList}
-          location={location}
-          pageTitle={'Result'}
-        />
+        <FilmList filmList={filmList} pageTitle={'Result'} />
       )}
-    </form>
+
+      {loading && <div>LOADING...</div>}
+      {error && !loading && <div>ERROR!</div>}
+    </section>
   );
 };
+
+export default SearchPage;

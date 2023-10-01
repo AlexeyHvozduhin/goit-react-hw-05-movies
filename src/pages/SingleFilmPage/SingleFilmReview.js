@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { singleFilmById } from '../../components/API';
+import { singleFilmByIdInfo } from '../../components/API';
 import { useEffect, useState } from 'react';
 import {
   ErrorMessage,
@@ -7,7 +7,7 @@ import {
   ReviewListElement,
 } from './SingleFilm.styled';
 
-export const SingleFilmReview = () => {
+const SingleFilmReview = () => {
   const [review, setReviews] = useState([]);
   const { filmId } = useParams();
 
@@ -21,7 +21,7 @@ export const SingleFilmReview = () => {
         setError(false);
         if (filmId) {
           // Запрос на актёров, снимающихся в конкретном фильме
-          const { results } = await singleFilmById(`${filmId}/reviews`);
+          const { results } = await singleFilmByIdInfo(`${filmId}/reviews`);
           setReviews(results);
         }
       } catch (error) {
@@ -40,10 +40,10 @@ export const SingleFilmReview = () => {
       {error && !loading && <div>ERROR!</div>}
       {review.length > 0 ? (
         <ReviewList>
-          {review.map(reviewContent => (
-            <ReviewListElement key={reviewContent.id}>
-              <h3>{reviewContent.author}</h3>
-              <p>{reviewContent.content ?? 'Nope'}</p>
+          {review.map(({ id, author, content }) => (
+            <ReviewListElement key={id}>
+              <h3>{author}</h3>
+              <p>{content ?? 'Nope'}</p>
             </ReviewListElement>
           ))}
         </ReviewList>
@@ -55,3 +55,5 @@ export const SingleFilmReview = () => {
     </div>
   );
 };
+
+export default SingleFilmReview;

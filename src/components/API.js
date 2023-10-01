@@ -15,7 +15,28 @@ export const mostPopularDay = async () => {
 };
 
 export const singleFilmById = async filmId => {
-  // console.log(filmId);
+  const resp = await axios.get(`movie/${filmId}?${baseAPIKey}`);
+  const {
+    poster_path,
+    original_title,
+    release_date,
+    vote_average,
+    overview,
+    genres,
+  } = resp.data;
+
+  const date = {
+    poster_path: poster_path,
+    filmName: original_title,
+    filmYear: release_date.slice(0, 4),
+    vote_average: vote_average,
+    overview: overview,
+    filmGenres: genres.map(genre => genre.name).join(', '),
+  };
+  return date;
+};
+
+export const singleFilmByIdInfo = async filmId => {
   const resp = await axios.get(`movie/${filmId}?${baseAPIKey}`);
   return resp.data;
 };
@@ -26,22 +47,3 @@ export const searchFilmByName = async filmName => {
   );
   return resp.data;
 };
-// export const fetchQuizess = async () => {
-//   const resp = await axios.get('/todo');
-//   return resp.data;
-// };
-
-// export const fetchQuizById = async quizId => {
-//   const resp = await axios.get(`/todo/${quizId}`);
-//   return resp.data;
-// };
-
-// export const deleteQuizById = async quizId => {
-//   const resp = await axios.delete(`/todo/${quizId}`);
-//   return resp.data;
-// };
-
-// export const createQuizById = async quiz => {
-//   const resp = await axios.post(`/todo`, quiz);
-//   return resp.data;
-// };

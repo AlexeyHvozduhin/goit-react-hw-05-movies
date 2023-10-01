@@ -73,6 +73,7 @@ export const ListHomePageElement = styled.li`
   cursor: pointer;
   transition: 0.5s;
   overflow: hidden;
+  height: 170px;
 
   &:hover {
     background-color: white;

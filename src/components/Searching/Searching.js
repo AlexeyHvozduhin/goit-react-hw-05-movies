@@ -1,13 +1,29 @@
+import { useSearchParams } from 'react-router-dom';
 import { InputWrapper, SearchButton, SearchForm } from './Searching.styled';
 
-export const Searching = ({ value, setSearchTerm }) => {
+export const Searching = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
+  const value = searchParams.get('value');
+
+  const ChengeParams = value => {
+    searchParams.set('value', value);
+    setSearchParams(searchParams);
+  };
+
+  const handleSearch = evt => {
+    evt.preventDefault();
+    const query = evt.target.query.value.trim().toLowerCase();
+    if (!query) return;
+    ChengeParams(query);
+  };
+
   return (
-    <SearchForm>
+    <SearchForm onSubmit={handleSearch}>
       <InputWrapper
         type="text"
-        value={value}
-        onChange={evt => setSearchTerm(evt.target.value)}
+        defaultValue={value}
         placeholder="Enter a movie title"
+        name="query"
       />
       <SearchButton type="submit">
         <svg
@@ -18,16 +34,16 @@ export const Searching = ({ value, setSearchTerm }) => {
           width="25px"
         >
           <path
-            stroke-linejoin="round"
-            stroke-linecap="round"
-            stroke-width="1.5"
+            strokeLinejoin="round"
+            strokeLinecap="round"
+            strokeWidth="1.5"
             stroke="#fff"
             d="M11.5 21C16.7467 21 21 16.7467 21 11.5C21 6.25329 16.7467 2 11.5 2C6.25329 2 2 6.25329 2 11.5C2 16.7467 6.25329 21 11.5 21Z"
           ></path>
           <path
-            stroke-linejoin="round"
-            stroke-linecap="round"
-            stroke-width="1.5"
+            strokeLinejoin="round"
+            strokeLinecap="round"
+            strokeWidth="1.5"
             stroke="#fff"
             d="M22 22L20 20"
           ></path>
