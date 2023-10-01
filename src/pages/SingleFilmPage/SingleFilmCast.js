@@ -9,7 +9,6 @@ const SingleFilmCast = () => {
   const { filmId } = useParams();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
-  const img_irl = 'https://image.tmdb.org/t/p/w500/';
 
   useEffect(() => {
     async function getQuizess() {

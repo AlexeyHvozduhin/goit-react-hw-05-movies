@@ -1,4 +1,3 @@
-import { useLocation } from 'react-router-dom';
 import { mostPopularDay } from '../components/API';
 import { useState, useEffect } from 'react';
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { searchFilmByName } from '../components/API';
-import { useLocation, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import { FilmList } from 'components/FilmList/FilmList';
 import { Searching } from 'components/Searching/Searching';
 
@@ -9,7 +9,7 @@ const SearchPage = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(false);
 
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [searchParams] = useSearchParams();
   const value = searchParams.get('value');
 
   useEffect(() => {
@@ -29,7 +29,7 @@ const SearchPage = () => {
       }
     }
     getQuizess();
-  }, [searchParams]);
+  }, [searchParams, value]);
 
   return (
     <section>
